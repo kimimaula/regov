@@ -14,7 +14,7 @@ const TextField = ({
   name,
   rules,
   type = "default",
-  maxLength = 20,
+  maxLength = 30,
 }: TextFieldProps) => {
   if (type === "password") {
     return (

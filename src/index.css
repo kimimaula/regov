@@ -29,7 +29,7 @@ body,
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--clr-grey-secondary);
+  background-color: var(--clr-white-secondary);
 }
 
 code {

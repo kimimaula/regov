@@ -1,5 +1,6 @@
 import { Col, Form } from "antd";
 import { LoginContainer, LoginCard } from "./styled";
+import { Link } from "react-router-dom";
 import { TextField, FormButton } from "../../Components";
 
 const LoginPage = () => {
@@ -24,6 +25,9 @@ const LoginPage = () => {
                 { required: true, message: "Please input your password!" },
               ]}
             />
+          </Col>
+          <Col span={24}>
+            <Link to="/forgot_password">Forgot Password</Link>
           </Col>
           <Col>
             <FormButton type="primary">Login</FormButton>

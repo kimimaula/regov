@@ -16,8 +16,8 @@ const LoginPage = () => {
         <LoginCard>
           <Col span={24}>
             <TextField
-              label="Username"
-              name="username"
+              label="Email"
+              name="email"
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
@@ -25,7 +25,7 @@ const LoginPage = () => {
           </Col>
           <Col span={24}>
             <TextField
-              label="Password"
+              label="New Password"
               name="password"
               type="password"
               rules={[
@@ -34,7 +34,14 @@ const LoginPage = () => {
             />
           </Col>
           <Col span={24}>
-            <Link to="/forgot-password">Forgot Password</Link>
+            <TextField
+              label="Confirm New Password"
+              name="confirm_password"
+              type="password"
+              rules={[
+                { required: true, message: "Please confirm your password!" },
+              ]}
+            />
           </Col>
           <Col>
             <FormButton type="primary">Login</FormButton>

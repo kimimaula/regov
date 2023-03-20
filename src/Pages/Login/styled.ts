@@ -14,6 +14,16 @@ const LoginCard = styled(Row)`
   background-color: var(--clr-white-primary);
   border-radius: 15px;
   border: 0.5px solid var(--clr-grey-primary);
+  width: 50vw;
+  @media screen and (max-width: 600px) {
+    width: 100vw;
+  }
 `;
 
-export { LoginContainer, LoginCard };
+const Title = styled.div`
+  font-weight: bold;
+  font-size: 24px;
+  margin: 10px 0;
+`;
+
+export { LoginContainer, LoginCard, Title };

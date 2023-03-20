@@ -1,4 +1,4 @@
-import { Col, Form, Row } from "antd";
+import { Col, Form, Button, Row } from "antd";
 import { LoginContainer, LoginCard, Title } from "./styled";
 import { Link, useNavigate } from "react-router-dom";
 import { TextField, FormButton } from "../../Components";
@@ -14,15 +14,26 @@ const LoginPage = () => {
     <LoginContainer>
       <Form onFinish={onFinish} name="loginForm">
         <LoginCard>
-          <Col span={24}>
-            <Title>Login</Title>
-          </Col>
+          <Title>Registration</Title>
           <Col span={24}>
             <TextField
               label="Username"
               name="username"
               rules={[
                 { required: true, message: "Please input your username!" },
+              ]}
+            />
+          </Col>
+          <Col span={24}>
+            <TextField
+              label="Email"
+              name="email"
+              rules={[
+                { required: true, message: "Please input your email!" },
+                {
+                  type: "email",
+                  message: "The input is not valid E-mail!",
+                },
               ]}
             />
           </Col>
@@ -37,16 +48,30 @@ const LoginPage = () => {
             />
           </Col>
           <Col span={24}>
-            <Link to="/forgot-password">Forgot Password</Link>
+            <TextField
+              label="Confirm Password"
+              name="confirm_password"
+              type="password"
+              rules={[
+                { required: true, message: "Please confirm your password!" },
+              ]}
+            />
           </Col>
           <Col span={24}>
-            <Link to="/registration">Register</Link>
-          </Col>
-          <Col span={24}>
-            <Row justify="space-between">
-              <Col />
+            <Row justify="end" gutter={5}>
               <Col>
-                <FormButton type="primary">Login</FormButton>
+                <Button
+                  onClick={() => navigate("/login")}
+                  htmlType="submit"
+                  type="primary"
+                >
+                  Cancel
+                </Button>
+              </Col>
+              <Col>
+                <FormButton danger type="primary">
+                  Register
+                </FormButton>
               </Col>
             </Row>
           </Col>

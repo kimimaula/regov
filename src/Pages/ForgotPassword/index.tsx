@@ -1,6 +1,6 @@
-import { Col, Form } from "antd";
-import { LoginContainer, LoginCard } from "./styled";
-import { Link, useNavigate } from "react-router-dom";
+import { Col, Form, Row, Button } from "antd";
+import { LoginContainer, LoginCard, Title } from "./styled";
+import { useNavigate } from "react-router-dom";
 import { TextField, FormButton } from "../../Components";
 
 const LoginPage = () => {
@@ -14,6 +14,7 @@ const LoginPage = () => {
     <LoginContainer>
       <Form onFinish={onFinish} name="loginForm">
         <LoginCard>
+          <Title>Forgot Password</Title>
           <Col span={24}>
             <TextField
               label="Email"
@@ -43,8 +44,23 @@ const LoginPage = () => {
               ]}
             />
           </Col>
-          <Col>
-            <FormButton type="primary">Login</FormButton>
+          <Col span={24}>
+            <Row justify="end" gutter={5}>
+              <Col>
+                <Button
+                  onClick={() => navigate("/login")}
+                  htmlType="submit"
+                  type="primary"
+                >
+                  Cancel
+                </Button>
+              </Col>
+              <Col>
+                <FormButton danger type="primary">
+                  Reset Password
+                </FormButton>
+              </Col>
+            </Row>
           </Col>
         </LoginCard>
       </Form>

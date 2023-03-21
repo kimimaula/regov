@@ -73,7 +73,7 @@ const HomePage = () => {
           height: "100%",
           borderRadius: 15,
           backgroundColor: "white",
-          padding: "30px 0px 0px 0px",
+          padding: "30px 10px 10px 10px",
         }}
       >
         <Row gutter={[10, 20]} justify="space-between">

@@ -4,12 +4,14 @@ import { RatingField, SelectField, TextAreaField } from "../../Components";
 import axios from "axios";
 import EventRoutes from "../../Api/routes/events";
 import ReviewRoutes from "../../Api/routes/reviews";
+import Cookies from "js-cookie";
 
 const AddReviewModal = () => {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState([]);
   const [form] = Form.useForm();
+  const token = Cookies.get("auth_token");
 
   type eventDataType = {
     _id: string;
@@ -61,11 +63,21 @@ const AddReviewModal = () => {
           ...form.getFieldsValue(),
           event: findEvent?.id,
         });
+        const headers = {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        };
         try {
           await axios.post(
             `${process.env.REACT_APP_BASE_API_URL}${ReviewRoutes.addReviews}`,
-            sendData
+            sendData,
+            { headers }
           );
+          Modal.success({
+            title: "Success!",
+            content: "Review Added",
+            onOk: () => setShowModal(false),
+          });
         } catch (error: any) {
           const errMessage =
             error?.response?.data?.message || "An Error Occured";
@@ -84,7 +96,7 @@ const AddReviewModal = () => {
   return (
     <Form form={form} name="addReview">
       <Spin spinning={loading}>
-        <Button onClick={() => handleFinish()} type="primary">
+        <Button onClick={() => setShowModal(true)} type="primary">
           Add Review
         </Button>
         <Modal

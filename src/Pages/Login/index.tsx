@@ -4,16 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { TextField, FormButton } from "../../Components";
 import LoginApiRoutes from "../../Api/routes/login";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
     try {
-      await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_BASE_API_URL}${LoginApiRoutes.login}`,
         values
       );
+      const token = response.data.token;
+      const username = response.data.user;
+      Cookies.set("auth_token", token);
+      Cookies.set("username", username);
       navigate("/");
     } catch (error: any) {
       const errMessage = error?.response?.data?.message || "An Error Occured";

@@ -3,6 +3,10 @@ import { Layout, Row, Col } from "antd";
 
 import { StyledContent, HeaderLink } from "./styled";
 
+import LogoutButton from "../LogoutButton";
+
+import Cookies from "js-cookie";
+
 const { Header } = Layout;
 
 interface PageLayoutProps {
@@ -10,6 +14,9 @@ interface PageLayoutProps {
 }
 
 const PageLayout = ({ children }: PageLayoutProps) => {
+  const token = Cookies.get("auth_token");
+  const isAuthenticated = !!token;
+
   return (
     <Layout>
       <Header style={{ backgroundColor: "var(--clr-light-blue)" }}>
@@ -36,7 +43,11 @@ const PageLayout = ({ children }: PageLayoutProps) => {
             </Row>
           </Col>
           <Col>
-            <HeaderLink to="/login">Log In</HeaderLink>
+            {isAuthenticated ? (
+              <LogoutButton />
+            ) : (
+              <HeaderLink to="/login">Log In</HeaderLink>
+            )}
           </Col>
         </Row>
       </Header>

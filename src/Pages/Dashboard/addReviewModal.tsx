@@ -3,6 +3,7 @@ import { Button, Modal, Form, Row, Col, Spin } from "antd";
 import { RatingField, SelectField, TextAreaField } from "../../Components";
 import axios from "axios";
 import EventRoutes from "../../Api/routes/events";
+import ReviewRoutes from "../../Api/routes/reviews";
 
 const AddReviewModal = () => {
   const [showModal, setShowModal] = useState(true);
@@ -10,7 +11,7 @@ const AddReviewModal = () => {
   const [events, setEvents] = useState([]);
   const [form] = Form.useForm();
 
-  type dataType = {
+  type eventDataType = {
     _id: string;
     eventName: string;
   };
@@ -24,7 +25,7 @@ const AddReviewModal = () => {
             `${process.env.REACT_APP_BASE_API_URL}${EventRoutes.getEvents}`
           );
           const data = response?.data?.data ?? [];
-          const options = data?.map((d: dataType) => {
+          const options = data?.map((d: eventDataType) => {
             return {
               id: d._id,
               value: d.eventName,
@@ -44,11 +45,33 @@ const AddReviewModal = () => {
     getEvents();
   }, [showModal]);
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     form
       .validateFields()
-      .then(() => {
-        console.log("---form", form.getFieldsValue());
+      .then(async () => {
+        const findEvent: any = events.find(
+          (e: any) => e.value === form.getFieldValue("eventName")
+        );
+        events.find((e) => form.getFieldValue("eventName") === "Event1");
+        const sendData = {
+          ...form.getFieldsValue(),
+          event: findEvent?.id,
+        };
+        console.log("---form", {
+          ...form.getFieldsValue(),
+          event: findEvent?.id,
+        });
+        try {
+          await axios.post(
+            `${process.env.REACT_APP_BASE_API_URL}${ReviewRoutes.addReviews}`,
+            sendData
+          );
+        } catch (error: any) {
+          const errMessage =
+            error?.response?.data?.message || "An Error Occured";
+          setLoading(false);
+          Modal.error({ title: "An Error Occured", content: errMessage });
+        }
       })
       .catch((errors) =>
         Modal.error({

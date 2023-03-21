@@ -5,7 +5,7 @@ import Registration from "./Pages/Registration";
 import HomePage from "./Pages/Home";
 import Dashboard from "./Pages/Dashboard";
 import { Routes, Route } from "react-router-dom";
-import { PageLayout } from "./Components";
+import { PrivateRoute, PublicRoute } from "./Components";
 
 const App = () => {
   return (
@@ -13,41 +13,41 @@ const App = () => {
       <Route
         path="/login"
         element={
-          <PageLayout>
+          <PublicRoute>
             <Login />
-          </PageLayout>
+          </PublicRoute>
         }
       />
       <Route
         path="/forgot-password"
         element={
-          <PageLayout>
+          <PublicRoute>
             <ForgotPassword />
-          </PageLayout>
+          </PublicRoute>
         }
       />
       <Route
         path="/registration"
         element={
-          <PageLayout>
+          <PublicRoute>
             <Registration />
-          </PageLayout>
+          </PublicRoute>
         }
       />
       <Route
         path="/dashboard"
         element={
-          <PageLayout>
+          <PrivateRoute>
             <Dashboard />
-          </PageLayout>
+          </PrivateRoute>
         }
       />
       <Route
         path="/"
         element={
-          <PageLayout>
+          <PublicRoute>
             <HomePage />
-          </PageLayout>
+          </PublicRoute>
         }
       />
       <Route path="*" element={<ErrorPage />} />

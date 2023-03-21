@@ -11,6 +11,7 @@ const StyledContent = styled(Content)`
 
 const HeaderLink = styled(Link)`
   color: white;
+  font-size: 12;
 `;
 
 export { StyledContent, HeaderLink };

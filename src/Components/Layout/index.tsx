@@ -15,17 +15,20 @@ const PageLayout = ({ children }: PageLayoutProps) => {
       <Header style={{ backgroundColor: "var(--clr-light-blue)" }}>
         <Row justify="space-between">
           <Col
-            xs={{ span: 16 }}
-            sm={{ span: 12 }}
-            md={{ span: 10 }}
-            lg={{ span: 6 }}
+            xs={{ span: 20 }}
+            sm={{ span: 14 }}
+            md={{ span: 12 }}
+            lg={{ span: 8 }}
           >
             <Row justify="space-around">
               <Col>
-                <HeaderLink to="/">Home</HeaderLink>
+                <HeaderLink to="/">News</HeaderLink>
               </Col>
               <Col>
                 <HeaderLink to="/reviews">Reviews</HeaderLink>
+              </Col>
+              <Col>
+                <HeaderLink to="/">Dashboard</HeaderLink>
               </Col>
               <Col>
                 <HeaderLink to="/notes">Notes</HeaderLink>

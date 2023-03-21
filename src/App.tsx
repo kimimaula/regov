@@ -2,6 +2,7 @@ import Login from "./Pages/Login";
 import ErrorPage from "./Pages/ErrorPage";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Registration from "./Pages/Registration";
+import HomePage from "./Pages/Home";
 import { Routes, Route } from "react-router-dom";
 import { PageLayout } from "./Components";
 
@@ -29,6 +30,14 @@ const App = () => {
         element={
           <PageLayout>
             <Registration />
+          </PageLayout>
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <PageLayout>
+            <HomePage />
           </PageLayout>
         }
       />

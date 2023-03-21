@@ -1,7 +1,19 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import NewsRoutes from "../../Api/routes/news";
-import { Modal, Card, Typography, Row, Col, Image, Skeleton } from "antd";
+import {
+  Modal,
+  Card,
+  Typography,
+  Row,
+  Col,
+  Image,
+  Skeleton,
+  Button,
+  Table,
+} from "antd";
+
+import AddReviewModal from "./addReviewModal";
 
 type displayDataProps = {
   _id: string;
@@ -12,6 +24,26 @@ type displayDataProps = {
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [displayData, setDisplayData] = useState([]);
+  const [reviewsData, setReviewsData] = useState([]);
+
+  const columns = [
+    {
+      title: "Title",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Review",
+      dataIndex: "review",
+      key: "review",
+    },
+    {
+      title: "Rating",
+      dataIndex: "rating",
+      key: "rating",
+    },
+  ];
+
   const getNews = async () => {
     setLoading(true);
     try {
@@ -32,36 +64,32 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ height: "100%" }}>
       <Typography.Title level={1} style={{ margin: 5 }}>
-        News
+        Dashboard
       </Typography.Title>
-      <Skeleton loading={loading} avatar active>
-        <div>
-          {displayData?.map((d: displayDataProps) => {
-            return (
-              <Card key={d._id} title={d.title}>
-                <Row gutter={10}>
-                  <Col span={5}>
-                    <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                  </Col>
-                  <Col span={19}>
-                    <div
-                      style={{
-                        maxWidth: "100%",
-                        wordWrap: "break-word",
-                        whiteSpace: "pre-wrap",
-                      }}
-                    >
-                      {d.description}
-                    </div>
-                  </Col>
-                </Row>
-              </Card>
-            );
-          })}
-        </div>
-      </Skeleton>
+      <div
+        style={{
+          height: "100%",
+          borderRadius: 15,
+          backgroundColor: "white",
+          padding: "30px 0px 0px 0px",
+        }}
+      >
+        <Row gutter={[10, 20]} justify="space-between">
+          <Col>
+            <Typography.Title level={3} style={{ margin: 5 }}>
+              Reviews
+            </Typography.Title>
+          </Col>
+          <Col span={3}>
+            <AddReviewModal />
+          </Col>
+          <Col span={24}>
+            <Table dataSource={reviewsData} columns={columns} />
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 };

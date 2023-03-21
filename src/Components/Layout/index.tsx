@@ -28,7 +28,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
                 <HeaderLink to="/reviews">Reviews</HeaderLink>
               </Col>
               <Col>
-                <HeaderLink to="/">Dashboard</HeaderLink>
+                <HeaderLink to="/dashboard">Dashboard</HeaderLink>
               </Col>
               <Col>
                 <HeaderLink to="/notes">Notes</HeaderLink>

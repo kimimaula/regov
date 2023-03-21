@@ -3,6 +3,7 @@ import ErrorPage from "./Pages/ErrorPage";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Registration from "./Pages/Registration";
 import HomePage from "./Pages/Home";
+import Dashboard from "./Pages/Dashboard";
 import { Routes, Route } from "react-router-dom";
 import { PageLayout } from "./Components";
 
@@ -30,6 +31,14 @@ const App = () => {
         element={
           <PageLayout>
             <Registration />
+          </PageLayout>
+        }
+      />
+      <Route
+        path="/dashboard"
+        element={
+          <PageLayout>
+            <Dashboard />
           </PageLayout>
         }
       />

@@ -72,7 +72,7 @@ const Events = () => {
             </Col>
             <Col>
               <Typography.Title level={5} style={{ margin: 5 }}>
-                Average ({displayData.averageRating.toFixed(1)})
+                Average ({displayData?.averageRating?.toFixed(1) || 0})
               </Typography.Title>
             </Col>
           </Row>

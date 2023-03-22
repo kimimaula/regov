@@ -10,17 +10,21 @@ interface EditEventsProps {
   setModalData: (arg0: any) => void;
 }
 
+type Status = "draft" | "published";
+
 const EditEvents = ({ modalData, setModalData }: EditEventsProps) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const token = Cookies.get("auth_token");
 
-  const handleFinish = async () => {
+  const handleFinish = async (status: Status) => {
     form
       .validateFields()
       .then(async () => {
         const sendData = {
           ...form.getFieldsValue(),
+          _id: modalData?.record?._id,
+          status,
         };
         const headers = {
           Authorization: `${token}`,
@@ -28,13 +32,13 @@ const EditEvents = ({ modalData, setModalData }: EditEventsProps) => {
         };
         try {
           await axios.post(
-            `${process.env.REACT_APP_BASE_API_URL}${AdminRoutes}`,
+            `${process.env.REACT_APP_BASE_API_URL}${AdminRoutes.editEvents}`,
             sendData,
             { headers }
           );
           Modal.success({
             title: "Success!",
-            content: "Notes Updated",
+            content: "Event Updated",
             onOk: () => {
               setModalData({ visible: false });
               window.location.reload();
@@ -80,9 +84,9 @@ const EditEvents = ({ modalData, setModalData }: EditEventsProps) => {
                   <Button
                     key="submit"
                     type="primary"
-                    onClick={() => setModalData({ visible: false })}
+                    onClick={() => handleFinish("published")}
                   >
-                    Close
+                    Update
                   </Button>,
                 ]
               : [
@@ -93,18 +97,15 @@ const EditEvents = ({ modalData, setModalData }: EditEventsProps) => {
                   >
                     Close
                   </Button>,
-                  <Button
-                    key="draft"
-                    onClick={() => setModalData({ visible: false })}
-                  >
+                  <Button key="draft" onClick={() => handleFinish("draft")}>
                     Save as Draft
                   </Button>,
                   <Button
-                    key="submit"
+                    key="publish"
                     type="primary"
-                    onClick={() => handleFinish()}
+                    onClick={() => handleFinish("published")}
                   >
-                    Add Review
+                    Publish
                   </Button>,
                 ]
           }
@@ -114,7 +115,6 @@ const EditEvents = ({ modalData, setModalData }: EditEventsProps) => {
               <TextField
                 label="Event Name"
                 name="eventName"
-                disabled={isPublished}
                 rules={[{ required: true, message: "Please enter event name" }]}
               />
             </Col>
@@ -123,7 +123,6 @@ const EditEvents = ({ modalData, setModalData }: EditEventsProps) => {
                 label="Event Description"
                 name="eventDescription"
                 maxLength={500}
-                disabled={isPublished}
                 rules={[{ required: true, message: "Please enter review" }]}
               />
             </Col>

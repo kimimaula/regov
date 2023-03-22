@@ -1,30 +1,11 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import NewsRoutes from "../../Api/routes/news";
-import {
-  Modal,
-  Card,
-  Typography,
-  Row,
-  Col,
-  Image,
-  Skeleton,
-  Button,
-  Table,
-  Spin,
-  Rate,
-} from "antd";
+import { Modal, Typography, Row, Col, Table, Spin, Rate } from "antd";
 
-import AddReviewModal from "./addReviewModal";
+import { AddReviews } from "../../Components";
 import ReviewRoutes from "../../Api/routes/reviews";
 
 import Cookies from "js-cookie";
-
-type displayDataProps = {
-  _id: string;
-  title: string;
-  description: string;
-};
 
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
@@ -106,7 +87,7 @@ const HomePage = () => {
               </Typography.Title>
             </Col>
             <Col span={3}>
-              <AddReviewModal />
+              <AddReviews />
             </Col>
             <Col span={24}>
               <Table

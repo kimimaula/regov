@@ -5,6 +5,7 @@ import PublicRoute from "./PublicLayout";
 import SelectField from "./SelectField";
 import TextAreaField from "./TextAreaField";
 import RatingField from "./RatingField";
+import AddReviews from "./AddReviews";
 
 export {
   TextField,
@@ -14,4 +15,5 @@ export {
   SelectField,
   TextAreaField,
   RatingField,
+  AddReviews,
 };

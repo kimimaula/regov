@@ -33,7 +33,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
                   <HeaderLink to="/">News</HeaderLink>
                 </Col>
                 <Col>
-                  <HeaderLink to="/reviews">Reviews</HeaderLink>
+                  <HeaderLink to="/events">Events</HeaderLink>
                 </Col>
                 <Col>
                   <HeaderLink to="/dashboard">Dashboard</HeaderLink>
@@ -80,7 +80,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
                 <HeaderLink to="/">News</HeaderLink>
               </Col>
               <Col>
-                <HeaderLink to="/reviews">Reviews</HeaderLink>
+                <HeaderLink to="/events">Events</HeaderLink>
               </Col>
               <Col>
                 <HeaderLink to="/dashboard">Dashboard</HeaderLink>

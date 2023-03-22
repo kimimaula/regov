@@ -28,6 +28,9 @@ const HomePage = () => {
       dataIndex: "review",
       key: "review",
       width: "70%",
+      render: (data: string) => {
+        return <div style={{ whiteSpace: "pre-wrap" }}>{data}</div>;
+      },
     },
     {
       title: "Rating",

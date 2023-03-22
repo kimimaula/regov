@@ -24,7 +24,7 @@ const AddReviewModal = () => {
         try {
           setLoading(true);
           const response = await axios.get(
-            `${process.env.REACT_APP_BASE_API_URL}${EventRoutes.getEvents}`
+            `${process.env.REACT_APP_BASE_API_URL}${EventRoutes.getEventNames}`
           );
           const data = response?.data?.data ?? [];
           const options = data?.map((d: eventDataType) => {

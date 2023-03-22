@@ -4,12 +4,21 @@ import ForgotPassword from "./Pages/ForgotPassword";
 import Registration from "./Pages/Registration";
 import HomePage from "./Pages/Home";
 import Dashboard from "./Pages/Dashboard";
+import Events from "./Pages/Events";
 import { Routes, Route } from "react-router-dom";
 import { PrivateRoute, PublicRoute } from "./Components";
 
 const App = () => {
   return (
     <Routes>
+      <Route
+        path="/events"
+        element={
+          <PublicRoute>
+            <Events />
+          </PublicRoute>
+        }
+      />
       <Route
         path="/login"
         element={

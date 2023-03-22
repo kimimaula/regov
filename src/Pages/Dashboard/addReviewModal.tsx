@@ -76,7 +76,10 @@ const AddReviewModal = () => {
           Modal.success({
             title: "Success!",
             content: "Review Added",
-            onOk: () => setShowModal(false),
+            onOk: () => {
+              setShowModal(false);
+              window.location.reload();
+            },
           });
         } catch (error: any) {
           const errMessage =
@@ -120,6 +123,7 @@ const AddReviewModal = () => {
               <TextAreaField
                 label="Review"
                 name="review"
+                maxLength={150}
                 rules={[{ required: true, message: "Please enter review" }]}
               />
             </Col>

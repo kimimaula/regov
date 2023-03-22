@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Modal, Typography, Row, Col, Table, Spin, Rate } from "antd";
+import { Modal, Typography, Row, Col, Table, Spin } from "antd";
+import { EditEvents } from "../../Components";
+
+import { StyledTable } from "./styled";
 
 import AdminRoutes from "../../Api/routes/admin";
 
@@ -11,6 +14,10 @@ const HomePage = () => {
   const [reviewsData, setReviewsData] = useState([]);
   const [newsData, setNewsData] = useState([]);
   const [events, setEvents] = useState([]);
+  const [showEditData, setShowEditData] = useState({
+    visible: false,
+    record: {},
+  });
 
   const token = Cookies.get("auth_token");
 
@@ -54,7 +61,6 @@ const HomePage = () => {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width: "70%",
       render: (data: string) => {
         return (
           <div
@@ -133,7 +139,6 @@ const HomePage = () => {
           setReviewsData(reviews);
           setNewsData(newsItems);
           setEvents(events);
-          // setReviewsData(response?.data?.data ?? []);
           setLoading(false);
         } catch (error: any) {
           const errMessage =
@@ -149,6 +154,7 @@ const HomePage = () => {
   return (
     <div style={{ height: "100%" }}>
       <Spin spinning={loading}>
+        <EditEvents modalData={showEditData} setModalData={setShowEditData} />
         <div
           style={{
             height: "100%",
@@ -165,10 +171,18 @@ const HomePage = () => {
               </Typography.Title>
             </Col>
             <Col span={24}>
-              <Table
+              <StyledTable
+                onRow={(record) => {
+                  return {
+                    onClick: () => {
+                      setShowEditData({ visible: true, record });
+                    },
+                  };
+                }}
                 pagination={{ pageSize: 5 }}
                 dataSource={events}
                 columns={eventsColumn}
+                rowClassName={() => "clickable-row"}
               />
             </Col>
           </Row>

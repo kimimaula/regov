@@ -74,7 +74,7 @@ const AddReviewNoData = ({ event }: EventDataType) => {
           Add Review
         </Button>
         <Modal
-          title="Basic Modal"
+          title="Add Review"
           open={showModal}
           onOk={() => handleFinish()}
           onCancel={() => setShowModal(false)}

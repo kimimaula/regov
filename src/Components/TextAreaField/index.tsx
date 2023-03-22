@@ -8,6 +8,7 @@ interface TextAreaFieldProps {
   name: string;
   rules: any[];
   maxLength?: number;
+  disabled?: boolean;
 }
 
 const TextAreaField = ({
@@ -15,10 +16,15 @@ const TextAreaField = ({
   name,
   rules,
   maxLength = 100,
+  disabled = false,
 }: TextAreaFieldProps) => {
   return (
     <StyledForm labelCol={{ span: 24 }} label={label} name={name} rules={rules}>
-      <TextArea autoSize={{ minRows: 4, maxRows: 6 }} maxLength={maxLength} />
+      <TextArea
+        disabled={disabled}
+        autoSize={{ minRows: 4, maxRows: 6 }}
+        maxLength={maxLength}
+      />
     </StyledForm>
   );
 };

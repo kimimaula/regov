@@ -10,6 +10,7 @@ import AddReviewEvent from "./AddReviewEvent";
 import AddEvents from "./AddEvents";
 import EditEvents from "./EditEvents";
 import EditNews from "./EditNews";
+import AddNews from "./AddNews";
 
 export {
   TextField,
@@ -24,4 +25,5 @@ export {
   AddEvents,
   EditEvents,
   EditNews,
+  AddNews,
 };

@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { Button, Modal, Form, Row, Col, Spin } from "antd";
-import {
-  RatingField,
-  SelectField,
-  TextAreaField,
-  TextField,
-} from "../../Components";
+import { TextAreaField, TextField } from "../../Components";
 import axios from "axios";
 import AdminRoutes from "../../Api/routes/admin";
 import Cookies from "js-cookie";
+
+type Status = "draft" | "published";
 
 const AddEvents = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,17 +13,13 @@ const AddEvents = () => {
   const [form] = Form.useForm();
   const token = Cookies.get("auth_token");
 
-  type eventDataType = {
-    _id: string;
-    eventName: string;
-  };
-
-  const handleFinish = async () => {
+  const handleFinish = async (status: Status) => {
     form
       .validateFields()
       .then(async () => {
         const sendData = {
           ...form.getFieldsValue(),
+          status,
         };
         const headers = {
           Authorization: `${token}`,
@@ -34,13 +27,13 @@ const AddEvents = () => {
         };
         try {
           await axios.post(
-            `${process.env.REACT_APP_BASE_API_URL}${AdminRoutes}`,
+            `${process.env.REACT_APP_BASE_API_URL}${AdminRoutes.addEvents}`,
             sendData,
             { headers }
           );
           Modal.success({
             title: "Success!",
-            content: "Notes Updated",
+            content: "Event Updated",
             onOk: () => {
               setShowModal(false);
               window.location.reload();
@@ -68,28 +61,40 @@ const AddEvents = () => {
     <Form form={form} name="addReview">
       <Spin spinning={loading}>
         <Button onClick={() => setShowModal(true)} type="primary">
-          Add Note
+          Add Event
         </Button>
         <Modal
-          title="Basic Modal"
+          title="Add New Event"
           open={showModal}
-          onOk={() => handleFinish()}
-          onCancel={() => setShowModal(false)}
-          cancelText="Save as Draft"
-          okText="Add Review"
+          closable={false}
+          footer={[
+            <Button key="close" danger onClick={() => setShowModal(false)}>
+              Close
+            </Button>,
+            <Button key="draft" onClick={() => handleFinish("draft")}>
+              Save as Draft
+            </Button>,
+            <Button
+              key="publish"
+              type="primary"
+              onClick={() => handleFinish("published")}
+            >
+              Publish
+            </Button>,
+          ]}
         >
           <Row>
             <Col span={24}>
               <TextField
-                label="Title"
-                name="title"
+                label="Event Name"
+                name="eventName"
                 rules={[{ required: true, message: "Please enter event name" }]}
               />
             </Col>
             <Col span={24}>
               <TextAreaField
-                label="Content"
-                name="content"
+                label="Event Description"
+                name="description"
                 maxLength={150}
                 rules={[{ required: true, message: "Please enter review" }]}
               />

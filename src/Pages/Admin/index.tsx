@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Modal, Typography, Row, Col, Table, Spin } from "antd";
-import { EditEvents, EditNews } from "../../Components";
+import { EditEvents, EditNews, AddEvents, AddNews } from "../../Components";
 
 import { StyledTable } from "./styled";
 
@@ -138,7 +138,6 @@ const HomePage = () => {
             `${process.env.REACT_APP_BASE_API_URL}${AdminRoutes.getAllData}`,
             { headers }
           );
-          console.log("---response", response?.data?.data);
           const { reviews, newsItems, events } = response?.data?.data;
           setReviewsData(reviews);
           setNewsData(newsItems);
@@ -178,6 +177,9 @@ const HomePage = () => {
                 Event
               </Typography.Title>
             </Col>
+            <Col>
+              <AddEvents />
+            </Col>
             <Col span={24}>
               <StyledTable
                 onRow={(record) => {
@@ -210,7 +212,9 @@ const HomePage = () => {
                 News
               </Typography.Title>
             </Col>
-            <Col span={3}></Col>
+            <Col>
+              <AddNews />
+            </Col>
             <Col span={24}>
               <StyledTable
                 pagination={{ pageSize: 5 }}

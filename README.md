@@ -37,3 +37,8 @@ Changelog v0.1.3 22/3/2023
 8. Complete integration with events and event page
 9. Added admin page
 10. Populated admin page with data from server
+11. Made event row clickable and editable
+12. Complete integration with edit events
+13. Made news row clickable and editable
+14. Complete integration with edit news
+15. Add and integrate ways for admin to add news and events

@@ -5,6 +5,7 @@ import Registration from "./Pages/Registration";
 import HomePage from "./Pages/Home";
 import Dashboard from "./Pages/Dashboard";
 import Events from "./Pages/Events";
+import Event from "./Pages/Event";
 import { Routes, Route } from "react-router-dom";
 import { PrivateRoute, PublicRoute } from "./Components";
 
@@ -16,6 +17,14 @@ const App = () => {
         element={
           <PublicRoute>
             <Events />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/event/:id"
+        element={
+          <PublicRoute>
+            <Event />
           </PublicRoute>
         }
       />

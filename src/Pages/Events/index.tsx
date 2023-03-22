@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import EventRoutes from "../../Api/routes/events";
+import { useNavigate } from "react-router-dom";
 import { Modal, Card, Typography, Row, Col, Image, Skeleton, Rate } from "antd";
 
 type displayDataProps = {
@@ -13,6 +14,8 @@ type displayDataProps = {
 const Events = () => {
   const [loading, setLoading] = useState(false);
   const [displayData, setDisplayData] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getEvents = async () => {
@@ -42,10 +45,13 @@ const Events = () => {
           {displayData?.map((d: displayDataProps) => {
             return (
               <Card
+                onClick={() => {
+                  navigate(`/event/${d.eventId}`);
+                }}
                 extra={
                   <Rate disabled allowHalf defaultValue={d.averageRating} />
                 }
-                style={{ margin: 10 }}
+                style={{ margin: 10, cursor: "pointer" }}
                 key={d.eventId}
                 title={d.eventName}
               >

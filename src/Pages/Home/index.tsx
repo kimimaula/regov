@@ -40,7 +40,7 @@ const HomePage = () => {
         <div>
           {displayData?.map((d: displayDataProps) => {
             return (
-              <Card key={d._id} title={d.title}>
+              <Card style={{ margin: 10 }} key={d._id} title={d.title}>
                 <Row gutter={10}>
                   <Col span={5}>
                     <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />

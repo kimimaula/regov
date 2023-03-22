@@ -7,6 +7,7 @@ interface TextFieldProps {
   rules: any[];
   type?: "default" | "password";
   maxLength?: number;
+  disabled?: boolean;
 }
 
 const TextField = ({
@@ -15,6 +16,7 @@ const TextField = ({
   rules,
   type = "default",
   maxLength = 30,
+  disabled = false,
 }: TextFieldProps) => {
   if (type === "password") {
     return (
@@ -30,7 +32,7 @@ const TextField = ({
   }
   return (
     <StyledForm labelCol={{ span: 24 }} label={label} name={name} rules={rules}>
-      <Input maxLength={maxLength} />
+      <Input disabled={disabled} maxLength={maxLength} />
     </StyledForm>
   );
 };

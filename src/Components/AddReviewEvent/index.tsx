@@ -1,67 +1,32 @@
 import { useState, useEffect } from "react";
 import { Button, Modal, Form, Row, Col, Spin } from "antd";
-import { RatingField, SelectField, TextAreaField } from "../../Components";
+import { RatingField, TextAreaField, TextField } from "../../Components";
 import axios from "axios";
-import EventRoutes from "../../Api/routes/events";
 import ReviewRoutes from "../../Api/routes/reviews";
 import Cookies from "js-cookie";
 
-const AddReviewModal = () => {
+type EventDataType = {
+  event: {
+    id: string | undefined;
+    eventName: string;
+  };
+};
+
+const AddReviewNoData = ({ event }: EventDataType) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [events, setEvents] = useState([]);
   const [form] = Form.useForm();
   const token = Cookies.get("auth_token");
 
-  type eventDataType = {
-    _id: string;
-    eventName: string;
-  };
-
-  useEffect(() => {
-    const getEvents = async () => {
-      if (showModal) {
-        try {
-          setLoading(true);
-          const response = await axios.get(
-            `${process.env.REACT_APP_BASE_API_URL}${EventRoutes.getEventNames}`
-          );
-          const data = response?.data?.data ?? [];
-          const options = data?.map((d: eventDataType) => {
-            return {
-              id: d._id,
-              value: d.eventName,
-              options: d.eventName,
-            };
-          });
-          setEvents(options);
-          setLoading(false);
-        } catch (error: any) {
-          const errMessage =
-            error?.response?.data?.message || "An Error Occured";
-          setLoading(false);
-          Modal.error({ title: "An Error Occured", content: errMessage });
-        }
-      }
-    };
-    getEvents();
-  }, [showModal]);
-
   const handleFinish = async () => {
+    console.log(event?.id);
     form
       .validateFields()
       .then(async () => {
-        const findEvent: any = events.find(
-          (e: any) => e.value === form.getFieldValue("eventName")
-        );
         const sendData = {
           ...form.getFieldsValue(),
-          event: findEvent?.id,
+          event: event?.id,
         };
-        console.log("---form", {
-          ...form.getFieldsValue(),
-          event: findEvent?.id,
-        });
         const headers = {
           Authorization: `${token}`,
           "Content-Type": "application/json",
@@ -98,6 +63,10 @@ const AddReviewModal = () => {
       );
   };
 
+  useEffect(() => {
+    form.setFieldValue("eventName", event.eventName);
+  }, [event, form]);
+
   return (
     <Form form={form} name="addReview">
       <Spin spinning={loading}>
@@ -114,10 +83,10 @@ const AddReviewModal = () => {
         >
           <Row>
             <Col span={24}>
-              <SelectField
+              <TextField
+                disabled={true}
                 label="Event Name"
                 name="eventName"
-                options={events}
                 rules={[{ required: true, message: "Please enter event name" }]}
               />
             </Col>
@@ -143,4 +112,4 @@ const AddReviewModal = () => {
   );
 };
 
-export default AddReviewModal;
+export default AddReviewNoData;

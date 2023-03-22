@@ -6,6 +6,7 @@ import SelectField from "./SelectField";
 import TextAreaField from "./TextAreaField";
 import RatingField from "./RatingField";
 import AddReviews from "./AddReviews";
+import AddReviewEvent from "./AddReviewEvent";
 
 export {
   TextField,
@@ -16,4 +17,5 @@ export {
   TextAreaField,
   RatingField,
   AddReviews,
+  AddReviewEvent,
 };

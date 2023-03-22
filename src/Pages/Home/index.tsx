@@ -46,7 +46,13 @@ const HomePage = () => {
                     <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
                   </Col>
                   <Col span={19}>
-                    <div style={{ maxWidth: "100%", wordWrap: "break-word" }}>
+                    <div
+                      style={{
+                        maxWidth: "100%",
+                        wordWrap: "break-word",
+                        whiteSpace: "pre-wrap",
+                      }}
+                    >
                       {d.description}
                     </div>
                   </Col>

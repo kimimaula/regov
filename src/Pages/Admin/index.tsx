@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Modal, Typography, Row, Col, Table, Spin } from "antd";
-import { EditEvents } from "../../Components";
+import { EditEvents, EditNews } from "../../Components";
 
 import { StyledTable } from "./styled";
 
@@ -14,7 +14,11 @@ const HomePage = () => {
   const [reviewsData, setReviewsData] = useState([]);
   const [newsData, setNewsData] = useState([]);
   const [events, setEvents] = useState([]);
-  const [showEditData, setShowEditData] = useState({
+  const [eventsEditData, setEventsEditData] = useState({
+    visible: false,
+    record: {},
+  });
+  const [newsEditData, setNewsEditData] = useState({
     visible: false,
     record: {},
   });
@@ -154,7 +158,11 @@ const HomePage = () => {
   return (
     <div style={{ height: "100%" }}>
       <Spin spinning={loading}>
-        <EditEvents modalData={showEditData} setModalData={setShowEditData} />
+        <EditEvents
+          modalData={eventsEditData}
+          setModalData={setEventsEditData}
+        />
+        <EditNews modalData={newsEditData} setModalData={setNewsEditData} />
         <div
           style={{
             height: "100%",
@@ -175,7 +183,7 @@ const HomePage = () => {
                 onRow={(record) => {
                   return {
                     onClick: () => {
-                      setShowEditData({ visible: true, record });
+                      setEventsEditData({ visible: true, record });
                     },
                   };
                 }}
@@ -204,10 +212,18 @@ const HomePage = () => {
             </Col>
             <Col span={3}></Col>
             <Col span={24}>
-              <Table
+              <StyledTable
                 pagination={{ pageSize: 5 }}
                 dataSource={newsData}
                 columns={newsColumn}
+                rowClassName={() => "clickable-row"}
+                onRow={(record) => {
+                  return {
+                    onClick: () => {
+                      setNewsEditData({ visible: true, record });
+                    },
+                  };
+                }}
               />
             </Col>
           </Row>

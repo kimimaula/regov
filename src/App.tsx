@@ -6,12 +6,21 @@ import HomePage from "./Pages/Home";
 import Dashboard from "./Pages/Dashboard";
 import Events from "./Pages/Events";
 import Event from "./Pages/Event";
+import Admin from "./Pages/Admin";
 import { Routes, Route } from "react-router-dom";
 import { PrivateRoute, PublicRoute } from "./Components";
 
 const App = () => {
   return (
     <Routes>
+      <Route
+        path="/admin"
+        element={
+          <PublicRoute>
+            <Admin />
+          </PublicRoute>
+        }
+      />
       <Route
         path="/events"
         element={

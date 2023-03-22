@@ -7,6 +7,7 @@ import TextAreaField from "./TextAreaField";
 import RatingField from "./RatingField";
 import AddReviews from "./AddReviews";
 import AddReviewEvent from "./AddReviewEvent";
+import AddEvents from "./AddEvents";
 
 export {
   TextField,
@@ -18,4 +19,5 @@ export {
   RatingField,
   AddReviews,
   AddReviewEvent,
+  AddEvents,
 };

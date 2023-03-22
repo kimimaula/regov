@@ -24,3 +24,16 @@ Changelog v0.1.2 21/3/2023
 8. Store token when logging in and add private and public routes for when user is logged in
 9. Added logout button to clear cookies when user clicks log out
 10. Added integration with add reviews
+
+Changelog v0.1.3 22/3/2023
+
+1. Populate table with user reviews in user Dashboar page
+2. Componentize add reviews modal for user dashboard
+3. Renamed reviews page to events page
+4. Add events page
+5. Add event page for when user click events, they can see event page
+6. Add ability for users to see reviews on event page
+7. Add ability for users to add reviews on event page
+8. Complete integration with events and event page
+9. Added admin page
+10. Populated admin page with data from server

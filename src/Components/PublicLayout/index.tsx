@@ -4,6 +4,7 @@ import { Layout, Row, Col } from "antd";
 import { StyledContent, HeaderLink } from "./styled";
 
 import LogoutButton from "../LogoutButton";
+import LoginButotn from "../LoginButton";
 
 import Cookies from "js-cookie";
 
@@ -21,7 +22,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
 
   return (
     <Layout>
-      <Header style={{ backgroundColor: "var(--clr-light-blue)" }}>
+      <Header style={{ position: "sticky", top: 0, zIndex: 1, width: "100%" }}>
         <Row justify="space-between">
           <Col
             xs={{ span: 20 }}
@@ -29,7 +30,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
             md={{ span: 12 }}
             lg={{ span: 8 }}
           >
-            <Row justify="space-around">
+            <Row gutter={[50, 0]}>
               <Col>
                 <HeaderLink to="/">News</HeaderLink>
               </Col>
@@ -48,13 +49,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
               )}
             </Row>
           </Col>
-          <Col>
-            {isAuthenticated ? (
-              <LogoutButton />
-            ) : (
-              <HeaderLink to="/login">Log In</HeaderLink>
-            )}
-          </Col>
+          <Col>{isAuthenticated ? <LogoutButton /> : <LoginButotn />}</Col>
         </Row>
       </Header>
       <StyledContent>{children}</StyledContent>

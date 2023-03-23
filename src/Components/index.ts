@@ -12,6 +12,7 @@ import EditEvents from "./EditEvents";
 import EditNews from "./EditNews";
 import AddNews from "./AddNews";
 import EditReviews from "./EditReviews";
+import LoginButotn from "./LoginButton";
 
 export {
   TextField,
@@ -28,4 +29,5 @@ export {
   EditNews,
   AddNews,
   EditReviews,
+  LoginButotn,
 };

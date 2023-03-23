@@ -12,7 +12,14 @@ const LogoutButton = () => {
     window.location.reload();
   };
   return (
-    <Button onClick={handleLogOut} icon={<LogoutOutlined />} type="primary" />
+    <Button
+      style={{ backgroundColor: "#DAA520" }}
+      onClick={handleLogOut}
+      icon={<LogoutOutlined />}
+      type="primary"
+    >
+      Log Out
+    </Button>
   );
 };
 

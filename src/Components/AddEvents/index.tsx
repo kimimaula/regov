@@ -96,7 +96,9 @@ const AddEvents = () => {
                 label="Event Description"
                 name="description"
                 maxLength={150}
-                rules={[{ required: true, message: "Please enter review" }]}
+                rules={[
+                  { required: true, message: "Please enter event description" },
+                ]}
               />
             </Col>
           </Row>

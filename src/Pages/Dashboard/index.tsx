@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Modal, Typography, Row, Col, Table, Spin, Rate } from "antd";
+import { Modal, Typography, Row, Col, Spin, Rate, Tag } from "antd";
 
 import { AddReviews, EditReviews } from "../../Components";
 import ReviewRoutes from "../../Api/routes/reviews";
@@ -52,6 +52,13 @@ const HomePage = () => {
       dataIndex: "status",
       key: "status",
       width: "20%",
+      render: (data: string) => {
+        return (
+          <Tag color={data === "draft" ? "gold" : "blue"}>
+            {data.toUpperCase()}
+          </Tag>
+        );
+      },
     },
   ];
 
@@ -82,14 +89,14 @@ const HomePage = () => {
   }, [token]);
 
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: "100%", padding: 25 }}>
       <EditReviews
         modalData={editReviewsData}
         setModalData={setEditReviewsData}
       />
       <Spin spinning={loading}>
-        <Typography.Title level={1} style={{ margin: 5 }}>
-          Dashboard
+        <Typography.Title level={1} style={{ margin: "15px 0" }}>
+          User Dashboard
         </Typography.Title>
         <div
           style={{
@@ -110,9 +117,10 @@ const HomePage = () => {
             </Col>
             <Col span={24}>
               <StyledTable
+                size="middle"
                 pagination={{ pageSize: 10 }}
                 dataSource={reviewsData}
-                columns={columns}
+                columns={columns as any}
                 rowClassName={() => "clickable-row"}
                 onRow={(record) => {
                   return {

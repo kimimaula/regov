@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import EventRoutes from "../../Api/routes/events";
 import { useParams } from "react-router-dom";
-import { Modal, Card, Typography, Row, Col, Image, Skeleton, Rate } from "antd";
+import { Modal, Typography, Row, Col, Image, Skeleton, Rate } from "antd";
 import { AddReviewEvent } from "../../Components";
 
 type UserDataType = {
@@ -55,14 +55,18 @@ const Events = () => {
 
   return (
     <Skeleton loading={loading} avatar active>
-      <Row style={{ padding: 30 }} gutter={[0, 10]} align="middle">
+      <Row
+        style={{ padding: 30, backgroundColor: "white", margin: 25 }}
+        gutter={[0, 10]}
+        align="middle"
+      >
         <Col>
           <Typography.Title level={1} style={{ margin: 5 }}>
             {displayData.eventName}
           </Typography.Title>
         </Col>
         <Col span={24}>
-          <Row gutter={[20, 0]}>
+          <Row>
             <Col>
               <Rate
                 allowHalf
@@ -77,22 +81,25 @@ const Events = () => {
             </Col>
           </Row>
         </Col>
-        <Row>
-          <Col span={5}>
-            <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+        <Row gutter={[0, 40]}>
+          <Col span={24}>
+            <Image
+              width={200}
+              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+            />
+          </Col>
+          <Col span={24} style={{ whiteSpace: "pre-wrap" }}>
+            {displayData.description}
+          </Col>
+          <Col>
+            <AddReviewEvent
+              event={{
+                id: id,
+                eventName: displayData.eventName,
+              }}
+            />
           </Col>
         </Row>
-        <Col span={24} style={{ whiteSpace: "pre-wrap" }}>
-          {displayData.description}
-        </Col>
-        <Col>
-          <AddReviewEvent
-            event={{
-              id: id,
-              eventName: displayData.eventName,
-            }}
-          />
-        </Col>
       </Row>
     </Skeleton>
   );

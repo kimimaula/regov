@@ -42,3 +42,12 @@ Changelog v0.1.3 22/3/2023
 13. Made news row clickable and editable
 14. Complete integration with edit news
 15. Add and integrate ways for admin to add news and events
+
+Changelog v0.1.4 23/3/2023
+
+1. Removed reviews for other users to see
+2. Added and integrated otp for users to change their passwords
+3. Complete integration for users to edit reviews
+4. Display Layout based on when user is logged in or not
+5. Checks and displays header based on isAdmin
+6. Cosmetic fixes for pages

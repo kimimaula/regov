@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import NewsRoutes from "../../Api/routes/news";
 import { Modal, Card, Typography, Row, Col, Image, Skeleton } from "antd";
+import moment from "moment";
 
 type displayDataProps = {
   _id: string;
@@ -31,36 +32,43 @@ const HomePage = () => {
     getNews();
   }, []);
 
+  const today = moment(new Date()).format("D-MMM-yyyy");
+
   return (
-    <div>
-      <Typography.Title level={1} style={{ margin: 5 }}>
-        News
+    <div style={{ padding: "0px 20px", margin: 20 }}>
+      <Typography.Title level={1} style={{ margin: "15px 0px" }}>
+        Latest News
+      </Typography.Title>
+      <Typography.Title level={5} style={{ margin: "15px 0px" }}>
+        {today}
       </Typography.Title>
       <Skeleton loading={loading} avatar active>
-        <div>
+        <Row gutter={[0, 20]}>
           {displayData?.map((d: displayDataProps) => {
             return (
-              <Card style={{ margin: 10 }} key={d._id} title={d.title}>
-                <Row gutter={10}>
-                  <Col span={5}>
-                    <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                  </Col>
-                  <Col span={19}>
-                    <div
-                      style={{
-                        maxWidth: "100%",
-                        wordWrap: "break-word",
-                        whiteSpace: "pre-wrap",
-                      }}
-                    >
-                      {d.description}
-                    </div>
-                  </Col>
-                </Row>
-              </Card>
+              <Col span={24} key={d._id}>
+                <Card title={d.title}>
+                  <Row gutter={10}>
+                    <Col span={5}>
+                      <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+                    </Col>
+                    <Col span={19}>
+                      <div
+                        style={{
+                          width: "100%",
+                          wordWrap: "break-word",
+                          whiteSpace: "pre-wrap",
+                        }}
+                      >
+                        {d.description}
+                      </div>
+                    </Col>
+                  </Row>
+                </Card>
+              </Col>
             );
           })}
-        </div>
+        </Row>
       </Skeleton>
     </div>
   );

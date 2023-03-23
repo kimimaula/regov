@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Modal, Typography, Row, Col, Table, Spin } from "antd";
+import { Modal, Typography, Row, Col, Table, Spin, Tag } from "antd";
 import { EditEvents, EditNews, AddEvents, AddNews } from "../../Components";
 
 import { StyledTable } from "./styled";
@@ -85,7 +85,11 @@ const HomePage = () => {
       dataIndex: "status",
       key: "status",
       render: (data: string) => {
-        return <div>{data.toUpperCase()}</div>;
+        return (
+          <Tag color={data === "draft" ? "gold" : "blue"}>
+            {data.toUpperCase()}
+          </Tag>
+        );
       },
     },
   ];
@@ -120,7 +124,11 @@ const HomePage = () => {
       dataIndex: "status",
       key: "status",
       render: (data: string) => {
-        return <div>{data?.toUpperCase()}</div>;
+        return (
+          <Tag color={data === "draft" ? "gold" : "blue"}>
+            {data.toUpperCase()}
+          </Tag>
+        );
       },
     },
   ];
@@ -155,7 +163,7 @@ const HomePage = () => {
   }, [token]);
 
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: "100%", padding: "0px 25px" }}>
       <Spin spinning={loading}>
         <EditEvents
           modalData={eventsEditData}
@@ -168,13 +176,13 @@ const HomePage = () => {
             borderRadius: 15,
             backgroundColor: "white",
             padding: "30px 10px 10px 10px",
-            margin: "10px 0",
+            margin: "15px 0",
           }}
         >
           <Row gutter={[10, 20]} justify="space-between">
             <Col>
               <Typography.Title level={3} style={{ margin: 5 }}>
-                Event
+                Event Administration
               </Typography.Title>
             </Col>
             <Col>
@@ -182,6 +190,7 @@ const HomePage = () => {
             </Col>
             <Col span={24}>
               <StyledTable
+                size="small"
                 onRow={(record) => {
                   return {
                     onClick: () => {
@@ -209,7 +218,7 @@ const HomePage = () => {
           <Row gutter={[10, 20]} justify="space-between">
             <Col>
               <Typography.Title level={3} style={{ margin: 5 }}>
-                News
+                News Administration
               </Typography.Title>
             </Col>
             <Col>
@@ -217,6 +226,7 @@ const HomePage = () => {
             </Col>
             <Col span={24}>
               <StyledTable
+                size="small"
                 pagination={{ pageSize: 5 }}
                 dataSource={newsData}
                 columns={newsColumn}
@@ -244,11 +254,12 @@ const HomePage = () => {
           <Row gutter={[10, 20]} justify="space-between">
             <Col>
               <Typography.Title level={3} style={{ margin: 5 }}>
-                Reviews
+                All User Reviews
               </Typography.Title>
             </Col>
             <Col span={24}>
               <Table
+                size="small"
                 pagination={{ pageSize: 5 }}
                 dataSource={reviewsData}
                 columns={reviewColumns}

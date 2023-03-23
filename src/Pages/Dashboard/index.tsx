@@ -2,14 +2,20 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Modal, Typography, Row, Col, Table, Spin, Rate } from "antd";
 
-import { AddReviews } from "../../Components";
+import { AddReviews, EditReviews } from "../../Components";
 import ReviewRoutes from "../../Api/routes/reviews";
+
+import { StyledTable } from "./styled";
 
 import Cookies from "js-cookie";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [reviewsData, setReviewsData] = useState([]);
+  const [editReviewsData, setEditReviewsData] = useState({
+    visible: false,
+    record: {},
+  });
 
   const token = Cookies.get("auth_token");
 
@@ -27,7 +33,7 @@ const HomePage = () => {
       title: "Review",
       dataIndex: "review",
       key: "review",
-      width: "70%",
+      width: "50%",
       render: (data: string) => {
         return <div style={{ whiteSpace: "pre-wrap" }}>{data}</div>;
       },
@@ -40,6 +46,12 @@ const HomePage = () => {
       render: (data: string) => {
         return <Rate disabled defaultValue={parseInt(data)} />;
       },
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      width: "20%",
     },
   ];
 
@@ -71,6 +83,10 @@ const HomePage = () => {
 
   return (
     <div style={{ height: "100%" }}>
+      <EditReviews
+        modalData={editReviewsData}
+        setModalData={setEditReviewsData}
+      />
       <Spin spinning={loading}>
         <Typography.Title level={1} style={{ margin: 5 }}>
           Dashboard
@@ -93,10 +109,18 @@ const HomePage = () => {
               <AddReviews />
             </Col>
             <Col span={24}>
-              <Table
+              <StyledTable
                 pagination={{ pageSize: 10 }}
                 dataSource={reviewsData}
                 columns={columns}
+                rowClassName={() => "clickable-row"}
+                onRow={(record) => {
+                  return {
+                    onClick: () => {
+                      setEditReviewsData({ visible: true, record });
+                    },
+                  };
+                }}
               />
             </Col>
           </Row>

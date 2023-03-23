@@ -1,33 +1,29 @@
 import { useState, useEffect } from "react";
-import { Button, Modal, Form, Row, Col, Spin } from "antd";
-import { RatingField, TextAreaField, TextField } from "../../Components";
+import { Modal, Form, Row, Col, Spin, Button } from "antd";
+import { TextAreaField, TextField, RatingField } from "../../Components";
 import axios from "axios";
 import ReviewRoutes from "../../Api/routes/reviews";
 import Cookies from "js-cookie";
 
-type EventDataType = {
-  event: {
-    id: string | undefined;
-    eventName: string;
-  };
-};
+interface EditReviewsProps {
+  modalData: { visible: boolean; record: any };
+  setModalData: (arg0: any) => void;
+}
 
 type Status = "draft" | "published";
 
-const AddReviewNoData = ({ event }: EventDataType) => {
-  const [showModal, setShowModal] = useState(false);
+const EditReviews = ({ modalData, setModalData }: EditReviewsProps) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const token = Cookies.get("auth_token");
 
   const handleFinish = async (status: Status) => {
-    console.log(event?.id);
     form
       .validateFields()
       .then(async () => {
         const sendData = {
           ...form.getFieldsValue(),
-          event: event?.id,
+          _id: modalData?.record?._id,
           status,
         };
         const headers = {
@@ -36,15 +32,15 @@ const AddReviewNoData = ({ event }: EventDataType) => {
         };
         try {
           await axios.post(
-            `${process.env.REACT_APP_BASE_API_URL}${ReviewRoutes.addReviews}`,
+            `${process.env.REACT_APP_BASE_API_URL}${ReviewRoutes.editReviews}`,
             sendData,
             { headers }
           );
           Modal.success({
             title: "Success!",
-            content: "Review Updated",
+            content: "News Updated",
             onOk: () => {
-              setShowModal(false);
+              setModalData({ visible: false });
               window.location.reload();
             },
           });
@@ -66,42 +62,60 @@ const AddReviewNoData = ({ event }: EventDataType) => {
       );
   };
 
+  const isPublished = modalData?.record?.status === "published";
+
   useEffect(() => {
-    form.setFieldValue("eventName", event.eventName);
-  }, [event, form]);
+    form.setFieldsValue({
+      ...modalData?.record,
+      eventName: modalData?.record?.event?.eventName,
+    });
+  }, [modalData, form]);
 
   return (
     <Form form={form} name="addReview">
       <Spin spinning={loading}>
-        <Button onClick={() => setShowModal(true)} type="primary">
-          Add Review
-        </Button>
         <Modal
-          title="Add Review"
-          open={showModal}
+          title="Edit News"
+          open={modalData.visible}
           closable={false}
-          footer={[
-            <Button key="close" danger onClick={() => setShowModal(false)}>
-              Close
-            </Button>,
-            <Button key="draft" onClick={() => handleFinish("draft")}>
-              Save as Draft
-            </Button>,
-            <Button
-              key="publish"
-              type="primary"
-              onClick={() => handleFinish("published")}
-            >
-              Publish
-            </Button>,
-          ]}
+          footer={
+            isPublished
+              ? [
+                  <Button
+                    key="submit"
+                    type="primary"
+                    onClick={() => handleFinish("published")}
+                  >
+                    Update
+                  </Button>,
+                ]
+              : [
+                  <Button
+                    key="close"
+                    danger
+                    onClick={() => setModalData({ visible: false })}
+                  >
+                    Close
+                  </Button>,
+                  <Button key="draft" onClick={() => handleFinish("draft")}>
+                    Save as Draft
+                  </Button>,
+                  <Button
+                    key="publish"
+                    type="primary"
+                    onClick={() => handleFinish("published")}
+                  >
+                    Publish
+                  </Button>,
+                ]
+          }
         >
           <Row>
             <Col span={24}>
               <TextField
-                disabled={true}
                 label="Event Name"
                 name="eventName"
+                disabled={true}
                 rules={[{ required: true, message: "Please enter event name" }]}
               />
             </Col>
@@ -127,4 +141,4 @@ const AddReviewNoData = ({ event }: EventDataType) => {
   );
 };
 
-export default AddReviewNoData;
+export default EditReviews;

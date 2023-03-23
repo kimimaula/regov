@@ -34,12 +34,16 @@ const PageLayout = ({ children }: PageLayoutProps) => {
               <Col>
                 <HeaderLink to="/events">Events</HeaderLink>
               </Col>
-              <Col>
-                <HeaderLink to="/dashboard">Dashboard</HeaderLink>
-              </Col>
-              <Col>
-                <HeaderLink to="/admin">Admin</HeaderLink>
-              </Col>
+              {isAuthenticated && (
+                <Col>
+                  <HeaderLink to="/dashboard">Dashboard</HeaderLink>
+                </Col>
+              )}
+              {isAuthenticated && (
+                <Col>
+                  <HeaderLink to="/admin">Admin</HeaderLink>
+                </Col>
+              )}
             </Row>
           </Col>
           <Col>

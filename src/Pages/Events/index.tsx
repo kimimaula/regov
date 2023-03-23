@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal, Card, Typography, Row, Col, Image, Skeleton, Rate } from "antd";
 
 type displayDataProps = {
-  eventId: string;
+  _id: string;
   eventName: string;
   description: string;
   averageRating: number;
@@ -46,13 +46,13 @@ const Events = () => {
             return (
               <Card
                 onClick={() => {
-                  navigate(`/event/${d.eventId}`);
+                  navigate(`/event/${d._id}`);
                 }}
                 extra={
                   <Rate disabled allowHalf defaultValue={d.averageRating} />
                 }
                 style={{ margin: 10, cursor: "pointer" }}
-                key={d.eventId}
+                key={d._id}
                 title={d.eventName}
               >
                 <Row gutter={10}>

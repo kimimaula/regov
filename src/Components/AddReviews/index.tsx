@@ -6,6 +6,8 @@ import EventRoutes from "../../Api/routes/events";
 import ReviewRoutes from "../../Api/routes/reviews";
 import Cookies from "js-cookie";
 
+type Status = "draft" | "published";
+
 const AddReviewModal = () => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -47,7 +49,7 @@ const AddReviewModal = () => {
     getEvents();
   }, [showModal]);
 
-  const handleFinish = async () => {
+  const handleFinish = async (status: Status) => {
     form
       .validateFields()
       .then(async () => {
@@ -56,12 +58,9 @@ const AddReviewModal = () => {
         );
         const sendData = {
           ...form.getFieldsValue(),
+          status,
           event: findEvent?.id,
         };
-        console.log("---form", {
-          ...form.getFieldsValue(),
-          event: findEvent?.id,
-        });
         const headers = {
           Authorization: `${token}`,
           "Content-Type": "application/json",
@@ -74,7 +73,7 @@ const AddReviewModal = () => {
           );
           Modal.success({
             title: "Success!",
-            content: "Review Added",
+            content: "Review Updated",
             onOk: () => {
               setShowModal(false);
               window.location.reload();
@@ -107,10 +106,22 @@ const AddReviewModal = () => {
         <Modal
           title="Add Review"
           open={showModal}
-          onOk={() => handleFinish()}
-          onCancel={() => setShowModal(false)}
-          cancelText="Cancel"
-          okText="Add Review"
+          closable={false}
+          footer={[
+            <Button key="close" danger onClick={() => setShowModal(false)}>
+              Close
+            </Button>,
+            <Button key="draft" onClick={() => handleFinish("draft")}>
+              Save as Draft
+            </Button>,
+            <Button
+              key="publish"
+              type="primary"
+              onClick={() => handleFinish("published")}
+            >
+              Publish
+            </Button>,
+          ]}
         >
           <Row>
             <Col span={24}>

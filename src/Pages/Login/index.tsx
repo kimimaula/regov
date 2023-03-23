@@ -17,8 +17,10 @@ const LoginPage = () => {
       );
       const token = response.data.token;
       const username = response.data.user;
+      const isAdmin = response.data.isAdmin;
       Cookies.set("auth_token", token);
       Cookies.set("username", username);
+      Cookies.set("isAdmin", isAdmin);
       navigate("/");
     } catch (error: any) {
       const errMessage = error?.response?.data?.message || "An Error Occured";

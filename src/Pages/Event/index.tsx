@@ -82,7 +82,9 @@ const Events = () => {
             <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
           </Col>
         </Row>
-        <Col style={{ whiteSpace: "pre-wrap" }}>{displayData.description}</Col>
+        <Col span={24} style={{ whiteSpace: "pre-wrap" }}>
+          {displayData.description}
+        </Col>
         <Col>
           <AddReviewEvent
             event={{

@@ -84,34 +84,12 @@ const Events = () => {
         </Row>
         <Col style={{ whiteSpace: "pre-wrap" }}>{displayData.description}</Col>
         <Col>
-          <Typography.Title level={3} style={{ margin: 5 }}>
-            Reviews
-          </Typography.Title>
-        </Col>
-        <Col>
           <AddReviewEvent
             event={{
               id: id,
               eventName: displayData.eventName,
             }}
           />
-        </Col>
-        <Col span={24}>
-          <Row>
-            <Col span={24}>
-              {displayData.reviews?.map((r: ReviewDataType) => {
-                return (
-                  <Card
-                    extra={<Rate disabled defaultValue={r.rating} />}
-                    style={{ margin: "10px 0" }}
-                    title={r.user.username}
-                  >
-                    <div style={{ whiteSpace: "pre" }}>{r.review}</div>
-                  </Card>
-                );
-              })}
-            </Col>
-          </Row>
         </Col>
       </Row>
     </Skeleton>

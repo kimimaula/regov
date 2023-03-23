@@ -15,7 +15,9 @@ interface PageLayoutProps {
 
 const PageLayout = ({ children }: PageLayoutProps) => {
   const token = Cookies.get("auth_token");
+  const checkAdmin = Cookies.get("isAdmin");
   const isAuthenticated = !!token;
+  const isAdmin = checkAdmin === "true";
 
   if (!isAuthenticated) {
     return (
@@ -40,7 +42,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
                     <HeaderLink to="/dashboard">Dashboard</HeaderLink>
                   </Col>
                 )}
-                {isAuthenticated && (
+                {isAuthenticated && isAdmin && (
                   <Col>
                     <HeaderLink to="/admin">Admin</HeaderLink>
                   </Col>
@@ -91,7 +93,7 @@ const PageLayout = ({ children }: PageLayoutProps) => {
                   <HeaderLink to="/dashboard">Dashboard</HeaderLink>
                 </Col>
               )}
-              {isAuthenticated && (
+              {isAuthenticated && isAdmin && (
                 <Col>
                   <HeaderLink to="/admin">Admin</HeaderLink>
                 </Col>

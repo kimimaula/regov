@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <HashRouter basename="/regov">
+    <HashRouter>
       <App />
     </HashRouter>
   </React.StrictMode>

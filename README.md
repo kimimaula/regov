@@ -67,3 +67,7 @@ Changelog v0.1.7 23/3/2023
 Changelog v0.1.8 23/3/2023
 
 1. added rule for when app refreshes
+
+Changelog v0.1.9 23/3/2023
+
+1. changed browser router to hash router to fix rendering

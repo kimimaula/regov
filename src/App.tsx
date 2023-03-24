@@ -10,6 +10,7 @@ import Admin from "./Pages/Admin";
 import { Routes, Route } from "react-router-dom";
 import { PrivateRoute, PublicRoute } from "./Components";
 
+console.log("---app is deployed");
 const App = () => {
   return (
     <Routes>

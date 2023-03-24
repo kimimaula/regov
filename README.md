@@ -52,22 +52,11 @@ Changelog v0.1.4 23/3/2023
 5. Checks and displays header based on isAdmin
 6. Cosmetic fixes for pages
 
-Changelog v0.1.5 23/3/2023
+Changelog v0.1.5 24/3/2023
 
 1. added production env
-
-Changelog v0.1.6 23/3/2023
-
-1. fix and removed extra /
-
-Changelog v0.1.7 23/3/2023
-
-1. added regov as basename for url
-
-Changelog v0.1.8 23/3/2023
-
-1. added rule for when app refreshes
-
-Changelog v0.1.9 23/3/2023
-
-1. changed browser router to hash router to fix rendering
+2. fix and removed extra /
+3. added regov as basename for url
+4. added rule for when app refreshes
+5. changed browser router to hash router to fix rendering in netlify
+6. Standardize admin route names to camelCase

@@ -51,3 +51,19 @@ Changelog v0.1.4 23/3/2023
 4. Display Layout based on when user is logged in or not
 5. Checks and displays header based on isAdmin
 6. Cosmetic fixes for pages
+
+Changelog v0.1.5 23/3/2023
+
+1. added production env
+
+Changelog v0.1.6 23/3/2023
+
+1. fix and removed extra /
+
+Changelog v0.1.7 23/3/2023
+
+1. added regov as basename for url
+
+Changelog v0.1.8 23/3/2023
+
+1. added rule for when app refreshes

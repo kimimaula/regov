@@ -1,5 +1,37 @@
 REV-WEB
 
+An Application created for Regov Technologies Interview
+
+## Requirements
+
+- Node.js
+- npm
+
+## Setup
+
+1. Clone the repository:
+   https://github.com/kimimaula/regov.git
+2. Navigate to the project directory:
+   `cd regov`
+3. Install the dependencies:
+   `npm install`
+4. Create a `.env` file in the root directory of the project to store the environment variables:
+   touch .env
+5. Open the `.env` file and add the following environment variables:
+   REACT_APP_BASE_API_URL="api url here"
+   Replace `api url here` with actual values.
+6. Save the `.env` file and close it.
+
+## Running the Application
+
+`npm run start`
+
+To start the application, run the following command in the project directory:
+
+The application will start and listen on port 3000
+
+## Changelog
+
 Changelog v0.1.1 20/3/2023
 
 1. Initialize project with CRA
@@ -60,3 +92,4 @@ Changelog v0.1.5 24/3/2023
 4. added rule for when app refreshes
 5. changed browser router to hash router to fix rendering in netlify
 6. Standardize admin route names to camelCase
+7. Added favicon and change app name

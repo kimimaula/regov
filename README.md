@@ -94,7 +94,7 @@ Changelog v0.1.5 24/3/2023
 6. Standardize admin route names to camelCase
 7. Added favicon and change app name
 
-Changelog v0.1.5 25/3/2023
+Changelog v0.1.6 25/3/2023
 
 1. Changed url from antd images to random image generator
 2. Installed jwt decode to decode for dashboard page

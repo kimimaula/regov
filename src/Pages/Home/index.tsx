@@ -50,7 +50,7 @@ const HomePage = () => {
                 <Card title={d.title}>
                   <Row gutter={10}>
                     <Col span={5}>
-                      <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
+                      <Image src="https://picsum.photos/200/200" />
                     </Col>
                     <Col span={19}>
                       <div

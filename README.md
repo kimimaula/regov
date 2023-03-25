@@ -93,3 +93,10 @@ Changelog v0.1.5 24/3/2023
 5. changed browser router to hash router to fix rendering in netlify
 6. Standardize admin route names to camelCase
 7. Added favicon and change app name
+
+Changelog v0.1.5 25/3/2023
+
+1. Changed url from antd images to random image generator
+2. Installed jwt decode to decode for dashboard page
+3. Added User profile and reset password to dashboard
+4. Refactor change password to send OTP together when changing password

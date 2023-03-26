@@ -8,6 +8,7 @@ const LogoutButton = () => {
   const handleLogOut = () => {
     Cookies.remove("auth_token");
     Cookies.remove("username");
+    Cookies.remove("idAdmin");
     navigate("/");
     window.location.reload();
   };

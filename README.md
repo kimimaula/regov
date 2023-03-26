@@ -100,3 +100,7 @@ Changelog v0.1.6 25/3/2023
 2. Installed jwt decode to decode for dashboard page
 3. Added User profile and reset password to dashboard
 4. Refactor change password to send OTP together when changing password
+
+Changelog v0.1.7 26/3/2023
+
+1. Updated change password section to auto add user email and remove email field

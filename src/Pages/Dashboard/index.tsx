@@ -144,7 +144,14 @@ const HomePage = () => {
     return (
       <Row justify="end" gutter={5}>
         <Col>
-          <Button onClick={() => setOtpStatus("default")} type="primary" danger>
+          <Button
+            onClick={() => {
+              form.resetFields();
+              setOtpStatus("default");
+            }}
+            type="primary"
+            danger
+          >
             Cancel
           </Button>
         </Col>
@@ -161,7 +168,14 @@ const HomePage = () => {
     return (
       <Row justify="end" gutter={5}>
         <Col>
-          <Button onClick={() => setOtpStatus("default")} type="primary" danger>
+          <Button
+            onClick={() => {
+              form.resetFields();
+              setOtpStatus("default");
+            }}
+            type="primary"
+            danger
+          >
             Cancel
           </Button>
         </Col>
@@ -176,80 +190,64 @@ const HomePage = () => {
 
   const ChangePassword = () => {
     return (
-      <Spin spinning={loading}>
-        <Form form={form} name="loginForm">
-          <LoginCard>
-            <Title>Forgot Password</Title>
+      <Form form={form} name="loginForm">
+        <LoginCard>
+          <Title>Forgot Password</Title>
+          <Col span={24}>
+            <TextField
+              label="New Password"
+              name="password"
+              type="password"
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
+            />
+          </Col>
+          <Col span={24}>
+            <TextField
+              label="Confirm New Password"
+              name="confirm_password"
+              type="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please confirm your new password!",
+                },
+                ({ getFieldValue }: any) => ({
+                  validator(_: any, value: string) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject("Passwords do not match!");
+                  },
+                }),
+              ]}
+            />
+          </Col>
+          {(otpStatus === "changePassword" || otpStatus === "sendOtp") && (
             <Col span={24}>
               <TextField
-                label="Email"
-                name="email"
+                label="OTP"
+                name="otp"
+                maxLength={6}
                 rules={[
-                  { required: true, message: "Please input your username!" },
+                  { required: true, message: "Confirm OTP" },
+                  {
+                    pattern: /^[0-9]*$/,
+                    message: "Please enter only numbers",
+                  },
+                  { max: 6, message: "OTP should be 6 digits" },
                 ]}
               />
             </Col>
-            {otpStatus === "sendOtp" && (
-              <Col span={24}>
-                <TextField
-                  label="OTP"
-                  name="otp"
-                  type="password"
-                  maxLength={6}
-                  rules={[
-                    { required: true, message: "Confirm OTP" },
-                    {
-                      pattern: /^[0-9]*$/,
-                      message: "Please enter only numbers",
-                    },
-                    { max: 6, message: "OTP should be 6 digits" },
-                  ]}
-                />
-              </Col>
-            )}
-            {otpStatus === "sendOtp" && (
-              <Col span={24}>
-                <TextField
-                  label="New Password"
-                  name="password"
-                  type="password"
-                  rules={[
-                    { required: true, message: "Please input your password!" },
-                  ]}
-                />
-              </Col>
-            )}
-            {otpStatus === "sendOtp" && (
-              <Col span={24}>
-                <TextField
-                  label="Confirm New Password"
-                  name="confirm_password"
-                  type="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please confirm your new password!",
-                    },
-                    ({ getFieldValue }: any) => ({
-                      validator(_: any, value: string) {
-                        if (!value || getFieldValue("password") === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject("Passwords do not match!");
-                      },
-                    }),
-                  ]}
-                />
-              </Col>
-            )}
+          )}
 
-            <Col span={24}>
-              {otpStatus === "default" && <RequestOtpButtons />}
-              {otpStatus === "sendOtp" && <ChangePasswordButtons />}
-            </Col>
-          </LoginCard>
-        </Form>
-      </Spin>
+          <Col span={24}>
+            {otpStatus === "default" && <RequestOtpButtons />}
+            {otpStatus === "sendOtp" && <ChangePasswordButtons />}
+          </Col>
+        </LoginCard>
+      </Form>
     );
   };
 
@@ -258,17 +256,21 @@ const HomePage = () => {
       try {
         setLoading(true);
         if (status === "sendOtp") {
-          const sendData = { email: form.getFieldValue("email") };
+          const sendData = { email: decodedToken.email };
           await axios.post(
             `${process.env.REACT_APP_BASE_API_URL}${LoginApiRoutes.getOtp}`,
             sendData
           );
           setOtpStatus(status);
           setLoading(false);
+          Modal.success({
+            title: "Success!",
+            content: `OTP sent to email ${decodedToken.email}`,
+          });
         }
         if (status === "changePassword") {
           const sendData = {
-            email: form.getFieldValue("email"),
+            email: decodedToken.email,
             password: form.getFieldValue("password"),
             otp: form.getFieldValue("otp"),
           };
@@ -282,6 +284,7 @@ const HomePage = () => {
             title: "Success!",
             content: "Password Updated",
             onOk: () => {
+              form.resetFields();
               setOtpStatus("default");
             },
           });

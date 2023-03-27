@@ -104,3 +104,11 @@ Changelog v0.1.6 25/3/2023
 Changelog v0.1.7 26/3/2023
 
 1. Updated change password section to auto add user email and remove email field
+
+Changelog v0.1.8 27/3/2023
+
+1. Removed scrictmode to avoid double api calling
+2. Added user routes to api file
+3. Added FileUploaderField component and UserAvatar
+4. Get user info from Api instead of decoded token
+5. Added ability to upload user image during registration

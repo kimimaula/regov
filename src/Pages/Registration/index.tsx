@@ -1,7 +1,7 @@
 import { Col, Form, Button, Row, Modal } from "antd";
 import { LoginContainer, LoginCard, Title } from "./styled";
 import { useNavigate } from "react-router-dom";
-import { TextField, FormButton } from "../../Components";
+import { TextField, FormButton, FileUploaderField } from "../../Components";
 import LoginApiRoutes from "../../Api/routes/login";
 import axios from "axios";
 
@@ -9,10 +9,20 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
+    const file = values.avatar.fileList[0];
+    const formData = new FormData();
+    formData.append("username", values.username);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    formData.append(
+      "avatar",
+      new File([file.originFileObj], file.name, { type: file.type })
+    );
+
     try {
       await axios.post(
         `${process.env.REACT_APP_BASE_API_URL}${LoginApiRoutes.register}`,
-        values
+        formData
       );
       Modal.success({
         title: "Account Created!",
@@ -29,6 +39,13 @@ const LoginPage = () => {
       <Form onFinish={onFinish} name="loginForm">
         <LoginCard>
           <Title>Registration</Title>
+          <Col span={24}>
+            <FileUploaderField
+              label="Avatar Image"
+              name="avatar"
+              rules={[{ required: true, message: "Please upload an avatar" }]}
+            />
+          </Col>
           <Col span={24}>
             <TextField
               label="Username"

@@ -13,6 +13,8 @@ import EditNews from "./EditNews";
 import AddNews from "./AddNews";
 import EditReviews from "./EditReviews";
 import LoginButotn from "./LoginButton";
+import FileUploaderField from "./FileUpload";
+import UserAvatar from "./UserAvatar";
 
 export {
   TextField,
@@ -30,4 +32,6 @@ export {
   AddNews,
   EditReviews,
   LoginButotn,
+  FileUploaderField,
+  UserAvatar,
 };

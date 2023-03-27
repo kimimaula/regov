@@ -1,7 +1,6 @@
 import {
   Col,
   Form,
-  Image,
   Layout,
   Menu,
   Modal,
@@ -13,11 +12,16 @@ import {
   Button,
 } from "antd";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
+import UserApiRoutes from "../../Api/routes/user";
 
 import ReviewRoutes from "../../Api/routes/reviews";
-import { AddReviews, EditReviews, TextField } from "../../Components";
+import {
+  AddReviews,
+  EditReviews,
+  TextField,
+  UserAvatar,
+} from "../../Components";
 
 import { StyledCard, StyledTable, LoginCard, Title } from "./styled";
 
@@ -27,9 +31,10 @@ import LoginApiRoutes from "../../Api/routes/login";
 
 const { Content, Sider } = Layout;
 
-type DecodedToken = {
-  user: "string";
-  email: "string";
+type UserData = {
+  user: string;
+  email: string;
+  avatar: string;
 };
 
 type status = "default" | "sendOtp" | "changePassword";
@@ -43,6 +48,11 @@ const HomePage = () => {
   });
   const [activeMenuItem, setActiveMenuItem] = useState("userProfile");
   const [otpStatus, setOtpStatus] = useState("default");
+  const [userData, setUserData] = useState<UserData>({
+    user: "",
+    email: "",
+    avatar: "",
+  });
   const [form] = Form.useForm();
 
   const handleMenuClick = (e: any) => {
@@ -63,9 +73,7 @@ const HomePage = () => {
       label: "Change Password",
     },
   ];
-
   const token = Cookies.get("auth_token");
-  const decodedToken: DecodedToken = jwtDecode(token as any);
 
   const UserReviews = () => {
     return (
@@ -107,30 +115,27 @@ const HomePage = () => {
           style={{ height: "100%" }}
           justify="center"
           align="middle"
-          gutter={[10, 20]}
+          gutter={[50, 20]}
         >
-          <Col span={6}>
-            <Image
-              style={{ borderRadius: 15 }}
-              src="https://picsum.photos/200/200"
-            />
+          <Col>
+            <UserAvatar url={userData.avatar} />
           </Col>
-          <Col span={18}>
+          <Col>
             <Row>
               <Col span={24}>
                 <Typography.Title level={4}>
-                  Welcome Back {decodedToken?.user}
+                  Welcome Back {userData?.user}
                 </Typography.Title>
               </Col>
 
               <Col span={24}>
                 <Typography.Paragraph>
-                  Username: {decodedToken?.user}
+                  Username: {userData?.user}
                 </Typography.Paragraph>
               </Col>
               <Col span={24}>
                 <Typography.Paragraph>
-                  Email: {decodedToken?.email}
+                  Email: {userData?.email}
                 </Typography.Paragraph>
               </Col>
             </Row>
@@ -256,7 +261,7 @@ const HomePage = () => {
       try {
         setLoading(true);
         if (status === "sendOtp") {
-          const sendData = { email: decodedToken.email };
+          const sendData = { email: userData.email };
           await axios.post(
             `${process.env.REACT_APP_BASE_API_URL}${LoginApiRoutes.getOtp}`,
             sendData
@@ -265,12 +270,12 @@ const HomePage = () => {
           setLoading(false);
           Modal.success({
             title: "Success!",
-            content: `OTP sent to email ${decodedToken.email}`,
+            content: `OTP sent to email ${userData.email}`,
           });
         }
         if (status === "changePassword") {
           const sendData = {
-            email: decodedToken.email,
+            email: userData.email,
             password: form.getFieldValue("password"),
             otp: form.getFieldValue("otp"),
           };
@@ -363,7 +368,27 @@ const HomePage = () => {
         }
       }
     };
+    const getUserData = async () => {
+      try {
+        setLoading(true);
+        const headers = {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        };
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_API_URL}${UserApiRoutes.getUserData}`,
+          { headers }
+        );
+        setUserData(response?.data?.data ?? []);
+        setLoading(false);
+      } catch (error: any) {
+        const errMessage = error?.response?.data?.message || "An Error Occured";
+        setLoading(false);
+        Modal.error({ title: "An Error Occured", content: errMessage });
+      }
+    };
     getEvents();
+    getUserData();
   }, [token]);
 
   return (
@@ -374,7 +399,7 @@ const HomePage = () => {
       />
       <Spin spinning={loading}>
         <Typography.Title level={5}>
-          Welcome Back {decodedToken?.user}
+          Welcome Back {userData?.user}
         </Typography.Title>
         <Typography.Title level={1} style={{ margin: "15px 0" }}>
           User Dashboard
